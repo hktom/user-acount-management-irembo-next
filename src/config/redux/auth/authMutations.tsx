@@ -63,6 +63,18 @@ export const authMutation = {
     return mutateMethods(request);
   },
 
+  logout: (data: IUser) => {
+    const request = `
+  mutation{
+    logout{
+      message
+      status
+    }
+  }`;
+
+    return mutateMethods(request);
+  },
+
   register: (data: IUser) => {
     const request = `
     mutation {

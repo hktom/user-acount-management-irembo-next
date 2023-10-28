@@ -34,7 +34,7 @@ export const queryMethods = async (object: any) => {
         `,
     });
   } catch (error) {
-    return { error: error };
+    return { message: error };
   }
 };
 

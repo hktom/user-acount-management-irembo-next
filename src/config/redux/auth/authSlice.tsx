@@ -46,15 +46,17 @@ const authSlice = createSlice({
     auth_callback: (
       state,
       action: PayloadAction<{
-        token: string;
-        message: string;
-        status: number;
+        token: string | null;
+        message: string | null;
+        status: number | null;
+        action : AuthAction | null;
       }>
     ) => {
       state.loading = false;
       state.token = action.payload.token;
       state.message = action.payload.message;
       state.status = action.payload.status;
+      state.method = action.payload.action;
     },
     loading: (state) => {
       state.loading = true;
