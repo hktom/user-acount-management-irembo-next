@@ -35,8 +35,8 @@ type Inputs = {
 function LoginPage() {
   const authState = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const [gender, setGender] = useState<string | null>(Gender.MAN);
-  const [maritalStatus, setMaritalStatus] = useState<string | null>(MARITAL_STATUS.SINGLE);
+  // const [gender, setGender] = useState<string | null>(Gender.MAN);
+  // const [maritalStatus, setMaritalStatus] = useState<string | null>(MARITAL_STATUS.SINGLE);
 
   useEffect(() => {
     if (authState.action === AuthAction.REGISTER_SUCCESS && authState.token) {

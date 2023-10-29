@@ -17,10 +17,32 @@ export const homeMutation = {
             }){
                 message
                 status
-                user
+                user{
+                    id
+                    first_name
+                    last_name
+                    email
+                    gender
+                    date_of_birth
+                    marital_status
+                    status
+                    photo
+                    document{
+                        id
+                        name
+                        photo
+                    }
+                    nationality{
+                        id
+                        name
+                        code
+                        flag
+                    }
+                }
             }
         }
         `;
+
     return mutateMethods(req);
   },
 

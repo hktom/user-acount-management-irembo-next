@@ -7,6 +7,7 @@ interface UserState {
   user: any;
   tmp_file: any;
   action: HomeAction | null;
+  message?: string;
 }
 
 const initialState: UserState = {
@@ -15,6 +16,7 @@ const initialState: UserState = {
   user: {},
   tmp_file: null,
   action: null,
+  message: "",
 };
 
 const homeSlice = createSlice({
@@ -29,6 +31,7 @@ const homeSlice = createSlice({
     },
     update_profile(state, action: PayloadAction<any>) {
       state.user = action.payload;
+      state.action = HomeAction.UPDATE_PROFILE;
     },
     upgrade_profile(state, action: PayloadAction<any>) {
       state.user = action.payload;
@@ -50,6 +53,7 @@ const homeSlice = createSlice({
         user?: any;
         tmp_file?: any;
         action: HomeAction | null;
+        message?: string;
       }>
     ) {
       state.users = action.payload.users || [...state.users];
@@ -57,6 +61,7 @@ const homeSlice = createSlice({
       state.user = action.payload.user || { ...state.user };
       state.tmp_file = action.payload.tmp_file || { ...state.tmp_file };
       state.action = action.payload.action;
+      state.message = action.payload.message || "";
     },
   },
 });

@@ -62,17 +62,20 @@ function* getUsersSaga(): SagaIterator {
 
 function* updateProfileSaga(action: any): SagaIterator {
   const res = yield call(homeMutation.updateProfile, action.payload);
-  if (res.data?.updateProfile?.user) {
+  const { user, message, status } = res.data?.updateProfile || {};
+  if (status == 200) {
     yield put(
       home_callback({
-        user: res.data?.updateProfile?.user,
+        user: user,
         action: HomeAction.UPDATE_PROFILE_SUCCESS,
+        message: message,
       })
     );
   } else {
     yield put(
       home_callback({
         action: HomeAction.UPDATE_PROFILE_FAILED,
+        message: message,
       })
     );
   }
