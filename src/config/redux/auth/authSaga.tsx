@@ -102,7 +102,7 @@ function* loginMultiFactorSaga(action: any): SagaIterator {
   }
 }
 
-export function* loginSagas(): Generator {
+export function* authSagas(): Generator {
   yield takeEvery("auth/login", loginSaga);
   yield takeEvery("auth/logout", logoutSaga);
   yield takeEvery("auth/register", registerSaga);
