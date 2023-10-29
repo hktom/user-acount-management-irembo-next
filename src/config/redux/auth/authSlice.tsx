@@ -2,7 +2,6 @@ import { AuthAction } from "@/config/helpers/enum";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
-
 interface AuthState {
   loading: boolean;
   token: string | null;

@@ -3,9 +3,9 @@ import { IUser } from "@/config/helpers/interface";
 
 export const authMutation = {
   multiFactor: (data: IUser) => {
-    const request = `
-  mutation{
-    loginMultiFactor(email:"${data.email}",password:"${data.password}"){
+    const request = `#graphql
+    mutation{
+      loginMultiFactor(email:"${data.email}",password:"${data.password}"){
             message
             status
         }
@@ -15,7 +15,7 @@ export const authMutation = {
   },
 
   login: (data: IUser) => {
-    const request = `
+    const request = `#graphql
   mutation{
         login(token:"${data.token}"){
             message
@@ -28,7 +28,7 @@ export const authMutation = {
   },
 
   verifyEmail: (data: IUser) => {
-    const request = `
+    const request = `#graphql
     mutation{
       verifyEmail(email:"${data.email}"){
         message
@@ -40,7 +40,7 @@ export const authMutation = {
   },
 
   resetPassword: (data: IUser) => {
-    const request = `
+    const request = `#graphql
     mutation{
       resetPassword(email:"${data.email}",password:"${data.password}",password_confirmation:"${data.password_confirmation}", token:"${data.token}"){
         message
@@ -52,7 +52,7 @@ export const authMutation = {
   },
 
   forgotPassword: (data: IUser) => {
-    const request = `
+    const request = `#graphql
     mutation{
       forgotPassword(email:"${data.email}"){
         message
@@ -64,7 +64,7 @@ export const authMutation = {
   },
 
   logout: (data: IUser) => {
-    const request = `
+    const request = `#graphql
   mutation{
     logout{
       message
@@ -76,7 +76,7 @@ export const authMutation = {
   },
 
   register: (data: IUser) => {
-    const request = `
+    const request = `#graphql
     mutation {
       register(
         first_name: "${data.first_name}"

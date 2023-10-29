@@ -65,9 +65,8 @@ export enum Gender {
   OTHER = "OTHER",
 }
 
-enum Status {
-  SINGLE = "SINGLE",
-  MARRIED = "MARRIED",
-  DIVORCED = "DIVORCED",
-  WIDOWED = "WIDOWED",
+export enum Status {
+  UNVERIFIED = "UNVERIFIED",
+  PENDING_VERIFICATION = "PENDING_VERIFICATION",
+  VERIFIED = "VERIFIED",
 }

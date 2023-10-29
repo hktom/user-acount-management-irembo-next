@@ -1,13 +1,12 @@
 import { HomeAction } from "@/config/helpers/enum";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-
 interface UserState {
   users: any[];
   countries: any[];
   user: any;
   tmp_file: any;
-  action : HomeAction | null;
+  action: HomeAction | null;
 }
 
 const initialState: UserState = {
@@ -42,6 +41,28 @@ const userSlice = createSlice({
     },
     get_users(state, action: PayloadAction<any[]>) {
       state.users = action.payload;
+    },
+    home_callback(
+      state,
+      action: PayloadAction<{
+        users: any[];
+        countries: any[];
+        user: any;
+        tmp_file: any;
+        action: HomeAction | null;
+      }>
+    ) {
+      if (action.payload.action === HomeAction.GET_DATA_SUCCESS) {
+        state.users = action.payload.users;
+        state.countries = action.payload.countries;
+        state.user = action.payload.user;
+      }
+
+      if (action.payload.action === HomeAction.UPLOAD_IMAGE_SUCCESS) {
+        state.tmp_file = action.payload.tmp_file;
+      }
+      
+      state.action = action.payload.action;
     },
   },
 });
