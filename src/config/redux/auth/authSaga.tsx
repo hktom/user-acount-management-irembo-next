@@ -90,13 +90,22 @@ function* verifyEmailSaga(action: any): SagaIterator {
 
 function* loginMultiFactorSaga(action: any): SagaIterator {
   const res = yield call(authMutation.multiFactor, action.payload);
-  if (res.data?.loginMultiFactor?.token) {
+  if (res.data?.loginMultiFactor?.status === 200) {
+    const { message, status } = res.data?.loginMultiFactor;
     yield put(
       auth_callback({
-        token: res.data?.loginMultiFactor?.token,
-        message: res.error?.message,
-        status: res.error?.status,
-        action: AuthAction.LOGIN_MULTI_FACTOR,
+        message: message,
+        status: status,
+        action: AuthAction.LOGIN_MULTI_FACTOR_SUCCESS,
+      })
+    );
+  } else {
+    const { message, status } = res.data?.loginMultiFactor;
+    yield put(
+      auth_callback({
+        message: message,
+        status: status,
+        action: AuthAction.LOGIN_MULTI_FACTOR_FAILED,
       })
     );
   }

@@ -11,6 +11,8 @@ export const authMutation = {
         }
     }`;
 
+    console.log(request);
+
     return mutateMethods(request);
   },
 

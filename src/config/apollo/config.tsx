@@ -4,11 +4,11 @@ import Cookies from "js-cookie";
 
 import { HttpLink } from "apollo-link-http";
 
-export const HOST_URL: string = "https://apigate.moringapp.com/";
+export const HOST_URL: string = "http://127.0.0.1:8000";
 
 export const TOKEN = Cookies.get("token");
 
-const httpLink = new HttpLink({ uri: `${HOST_URL}graphql` });
+const httpLink = new HttpLink({ uri: `${HOST_URL}/graphql` });
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext(({ headers = {} }) => ({
