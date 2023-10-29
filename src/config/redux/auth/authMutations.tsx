@@ -63,7 +63,7 @@ export const authMutation = {
     return mutateMethods(request);
   },
 
-  logout: (data: IUser) => {
+  logout: () => {
     const request = `#graphql
   mutation{
     logout{

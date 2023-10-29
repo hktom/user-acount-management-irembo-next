@@ -20,17 +20,15 @@ function* loginSaga(action: any): SagaIterator {
 }
 
 function* logoutSaga(action: any): SagaIterator {
-  const res = yield call(authMutation.logout, action.payload);
-  if (res.data?.logout?.token) {
-    yield put(
-      auth_callback({
-        token: null,
-        message: res.error?.message,
-        status: res.error?.status,
-        action: AuthAction.LOGOUT,
-      })
-    );
-  }
+  const res = yield call(authMutation.logout);
+  const { message, status } = res.data?.logout || {};
+  yield put(
+    auth_callback({
+      message: message,
+      status: status,
+      action: AuthAction.LOGOUT_SUCCESS,
+    })
+  );
 }
 
 function* registerSaga(action: any): SagaIterator {
