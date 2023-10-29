@@ -17,6 +17,7 @@ import { AuthAction } from "@/config/helpers/enum";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { login, login_multi_factor } from "@/config/redux/auth/authSlice";
+import { useRouter } from "next/router";
 
 type Inputs = {
   email: string;
@@ -26,12 +27,13 @@ type Inputs = {
 function LoginPage() {
   const authState = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     if (authState.action === AuthAction.LOGIN_MULTI_FACTOR_SUCCESS) {
-    //   Cookies.set("token", authState.token);
+      router.push("/auth/multi-factore");
     }
-  }, [authState]);
+  }, [authState, router]);
 
   const {
     register,
@@ -75,7 +77,8 @@ function LoginPage() {
           <Input type="password" required {...register("password")} />
         </FormControl>
         <Button colorScheme="teal" size="md" type="submit">
-          Login {authState.action == AuthAction.LOGIN_MULTI_FACTOR && <Spinner />}
+          Login{" "}
+          {authState.action == AuthAction.LOGIN_MULTI_FACTOR && <Spinner />}
         </Button>
 
         <Link

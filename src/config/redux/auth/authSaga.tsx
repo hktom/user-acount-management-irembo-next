@@ -7,13 +7,22 @@ import { emailCheck, passwordCheck, passwordSame } from "./helpers";
 
 function* loginSaga(action: any): SagaIterator {
   const res = yield call(authMutation.login, action.payload);
-  if (res.data?.login?.token) {
+  const { token, message, status } = res.data?.login || {};
+  if (token) {
     yield put(
       auth_callback({
-        token: res.data?.login?.token,
-        message: res.error?.message,
-        status: res.error?.status,
-        action: AuthAction.LOGIN,
+        token: token,
+        message: message,
+        status: status,
+        action: AuthAction.LOGIN_SUCCESS,
+      })
+    );
+  } else {
+    yield put(
+      auth_callback({
+        message: message,
+        status: status,
+        action: AuthAction.LOGIN_FAILED,
       })
     );
   }
@@ -147,7 +156,7 @@ function* verifyEmailSaga(action: any): SagaIterator {
 
 function* loginMultiFactorSaga(action: any): SagaIterator {
   const res = yield call(authMutation.multiFactor, action.payload);
-  if (res.data?.loginMultiFactor?.status === 200) {
+  if (res.data?.loginMultiFactor?.status == 200) {
     const { message, status } = res.data?.loginMultiFactor;
     yield put(
       auth_callback({
