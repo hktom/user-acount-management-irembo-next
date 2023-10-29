@@ -2,7 +2,8 @@ import { queryMethods } from "@/config/apollo/config";
 
 export const homeQuery = {
   me: () => {
-    const req = `#graphql{
+    const req = `#graphql
+    {
             me{
                 id
                 first_name
@@ -30,7 +31,8 @@ export const homeQuery = {
     return queryMethods(req);
   },
   countries: () => {
-    const req = `#graphql{
+    const req = `#graphql
+    {
         countries{
             id
             name
@@ -43,7 +45,8 @@ export const homeQuery = {
   },
 
   users: () => {
-    const req = `#graphql{
+    const req = `#graphql
+    {
         users{
             id
             first_name

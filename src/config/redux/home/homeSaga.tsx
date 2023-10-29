@@ -15,6 +15,7 @@ function* getMeSaga(): SagaIterator {
       })
     );
   } else {
+    console.log(res);
     yield put(
       home_callback({
         action: HomeAction.GET_ME_FAILED,
@@ -117,10 +118,10 @@ function* confirmDocumentSaga(action: any): SagaIterator {
 }
 
 export function* homeSagas(): Generator {
-  yield takeEvery("home/get_me", getMeSaga);
-    yield takeEvery("home/get_countries", getCountriesSaga);
-    yield takeEvery("home/get_users", getUsersSaga);
-    yield takeEvery("home/update_profile", updateProfileSaga);
-    yield takeEvery("home/post_document", postDocumentSaga);
-    yield takeEvery("home/confirm_document", confirmDocumentSaga);
+  yield takeEvery("home/get_data", getMeSaga);
+  yield takeEvery("home/get_countries", getCountriesSaga);
+  yield takeEvery("home/get_users", getUsersSaga);
+  yield takeEvery("home/update_profile", updateProfileSaga);
+  yield takeEvery("home/post_document", postDocumentSaga);
+  yield takeEvery("home/confirm_document", confirmDocumentSaga);
 }

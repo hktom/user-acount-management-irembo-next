@@ -17,12 +17,12 @@ const initialState: UserState = {
   action: null,
 };
 
-const userSlice = createSlice({
-  name: "user",
+const homeSlice = createSlice({
+  name: "home",
   initialState,
   reducers: {
-    getData(state, action: PayloadAction<any[]>) {
-      state.users = action.payload;
+    get_data(state) {
+      state.action = HomeAction.GET_DATA;
     },
     add_country(state, action: PayloadAction<any>) {
       state.countries?.push(action.payload);
@@ -62,7 +62,7 @@ const userSlice = createSlice({
 });
 
 export const {
-  getData,
+  get_data,
   add_country,
   update_profile,
   upgrade_profile,
@@ -70,6 +70,6 @@ export const {
   upload_file,
   get_users,
   home_callback,
-} = userSlice.actions;
+} = homeSlice.actions;
 
-export default userSlice.reducer;
+export default homeSlice.reducer;

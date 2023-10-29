@@ -1,5 +1,12 @@
+import { HomeAction } from "@/config/helpers/enum";
+import { get_data } from "@/config/redux/home/homeSlice";
+import { useAppDispatch, useAppSelector } from "@/config/store";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
   Box,
   Heading,
   IconButton,
@@ -10,14 +17,24 @@ import {
   MenuGroup,
   MenuItem,
   MenuList,
+  Progress,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { useEffect } from "react";
 
 interface MainLayoutProps {
   children: React.ReactNode;
 }
 
 function MainLayout(props: MainLayoutProps) {
+  const state = useAppSelector((state) => state.home);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!state.user.id) {
+      dispatch(get_data());
+    }
+  }, [dispatch, state.user.id]);
   return (
     <>
       <Box
@@ -51,6 +68,19 @@ function MainLayout(props: MainLayoutProps) {
           </MenuList>
         </Menu>
       </Box>
+      {state.action === HomeAction.GET_DATA && (
+        <Progress size="xs" isIndeterminate />
+      )}
+
+      {state.action === HomeAction.GET_ME_FAILED && (
+        <Alert status="error">
+          <AlertIcon />
+          <AlertTitle>{"We couldn't load your profile"}</AlertTitle>
+          <AlertDescription>
+            {"Please try again in a few minutes"}
+          </AlertDescription>
+        </Alert>
+      )}
       <Image
         src="/pexels-entumoto-camp-17831035.jpg"
         alt="Dan Abramov"
