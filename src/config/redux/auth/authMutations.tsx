@@ -11,8 +11,6 @@ export const authMutation = {
         }
     }`;
 
-    console.log(request);
-
     return mutateMethods(request);
   },
 
@@ -86,10 +84,10 @@ export const authMutation = {
         email: "${data.email}"
         password: "${data.password}"
         password_confirmation: "${data.password_confirmation}"
-        nationality_id:"${data.nationality_id}"
-        gender:${data.gender}
-        date_of_birth:"${data.date_of_birth}"
-        marital_status:${data.marital_status}
+        # nationality_id:"${data.nationality_id}"
+        # gender:${data.gender}
+        # date_of_birth:"${data.date_of_birth}"
+        # marital_status:${data.marital_status}
       ){
         message
         token

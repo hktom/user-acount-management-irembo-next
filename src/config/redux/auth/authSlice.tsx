@@ -44,7 +44,7 @@ const authSlice = createSlice({
       state.loading = true;
       state.action = AuthAction.LOGOUT;
     },
-    register: (state) => {
+    register: (state, payload: PayloadAction<any>) => {
       state.loading = true;
       state.action = AuthAction.REGISTER;
     },
