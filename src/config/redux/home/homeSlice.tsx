@@ -23,6 +23,9 @@ const homeSlice = createSlice({
   name: "home",
   initialState,
   reducers: {
+    home_reset_actions(state) {
+      state.action = null;
+    },
     get_data(state) {
       state.action = HomeAction.GET_DATA;
     },
@@ -75,6 +78,7 @@ export const {
   upload_file,
   get_users,
   home_callback,
+  home_reset_actions,
 } = homeSlice.actions;
 
 export default homeSlice.reducer;

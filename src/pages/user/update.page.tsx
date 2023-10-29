@@ -5,9 +5,13 @@ import {
   AuthAction,
   HomeAction,
 } from "@/config/helpers/enum";
-import { update_profile } from "@/config/redux/home/homeSlice";
+import {
+  home_reset_actions,
+  update_profile,
+} from "@/config/redux/home/homeSlice";
 import { useAppDispatch, useAppSelector } from "@/config/store";
 import MainLayout from "@/layout/mainLayout";
+import { ChevronLeftIcon } from "@chakra-ui/icons";
 import {
   Alert,
   AlertIcon,
@@ -16,11 +20,13 @@ import {
   FormControl,
   FormLabel,
   Heading,
+  IconButton,
   Input,
   Select,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import NextLink from "next/link";
 
 type Inputs = {
   first_name: string;
@@ -61,10 +67,22 @@ function UpdatePage() {
     );
   };
 
+  useEffect(() => {
+    dispatch(home_reset_actions());
+  }, [dispatch]);
+
   return (
     <MainLayout>
       <Box w={"100%"}>
-        <Heading mb={5}>Update Profile</Heading>
+        <Heading mb={5}>
+          <IconButton
+            icon={<ChevronLeftIcon />}
+            aria-label="Search database"
+            as={NextLink}
+            href="/user/"
+          />{" "}
+          Update Profile
+        </Heading>
 
         {HomeAction.UPDATE_PROFILE_FAILED == stateHome.action && (
           <Alert status="error">
