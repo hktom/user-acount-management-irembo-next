@@ -81,7 +81,7 @@ function Profile() {
           <Avatar
             size="2xl"
             name={stateHome.user?.first_name + " " + stateHome.user?.last_name}
-            src={HOST_URL + "/" + stateHome.user?.photo}
+            src={HOST_URL + "/storage/" + stateHome.user?.photo}
             mb={20}
           />
 
@@ -129,7 +129,7 @@ function Profile() {
             <Button leftIcon={<EmailIcon />} colorScheme='teal' variant='solid' as={NextLink} href="/user/update">
               Edit profile
             </Button>
-            <Button leftIcon={<CopyIcon />} colorScheme='teal' variant='solid' as={NextLink} href="/user/upload">
+            <Button leftIcon={<CopyIcon />} colorScheme='teal' variant='solid' as={NextLink} href="/user/update-image">
               Edit Profile Picture
             </Button>
             <Button leftIcon={<UnlockIcon />} colorScheme='teal' variant='solid' as={NextLink} href="/user/document">

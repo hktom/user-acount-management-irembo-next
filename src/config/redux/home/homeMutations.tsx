@@ -1,9 +1,9 @@
-import { mutateMethods } from "@/config/apollo/config";
+import { HOST_URL, TOKEN, mutateMethods } from "@/config/apollo/config";
 import { Status } from "@/config/helpers/enum";
 import { IDocument, IUser } from "@/config/helpers/interface";
+import axios from "axios";
 
 export const homeMutation = {
-
   updateProfile: (data: IUser) => {
     const req = `#graphql
         mutation{
@@ -73,5 +73,23 @@ export const homeMutation = {
         }
     `;
     return mutateMethods(req);
+  },
+
+  uploadImage: async (image: File | any) => {
+    const data = new FormData();
+    data.append("image", image);
+
+    try {
+      const res = await axios.post(`${HOST_URL}/api/image/store`, data, {
+        headers: {
+          "content-type": "multipart/form-data",
+          authorization: "Bearer " + TOKEN,
+        },
+      });
+      return res;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   },
 };

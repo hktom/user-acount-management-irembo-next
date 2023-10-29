@@ -120,6 +120,25 @@ function* confirmDocumentSaga(action: any): SagaIterator {
   }
 }
 
+function* uploadImageSaga(action: any): SagaIterator {
+  const res = yield call(homeMutation.uploadImage, action.payload);
+  if (res.data) {
+    yield put(
+      home_callback({
+        action: HomeAction.UPLOAD_IMAGE_SUCCESS,
+        image_link: res.data,
+      })
+    );
+  } else {
+    yield put(
+      home_callback({
+        message: "We can't upload your image. Be sure your image extension is jpeg,png,jpg,webp and the size is less than 1MB",
+        action: HomeAction.UPLOAD_IMAGE_FAILED,
+      })
+    );
+  }
+}
+
 export function* homeSagas(): Generator {
   yield takeEvery("home/get_data", getMeSaga);
   yield takeEvery("home/get_countries", getCountriesSaga);
@@ -127,4 +146,5 @@ export function* homeSagas(): Generator {
   yield takeEvery("home/update_profile", updateProfileSaga);
   yield takeEvery("home/post_document", postDocumentSaga);
   yield takeEvery("home/confirm_document", confirmDocumentSaga);
+  yield takeEvery("home/upload_image", uploadImageSaga);
 }

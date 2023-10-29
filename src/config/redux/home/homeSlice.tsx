@@ -5,18 +5,18 @@ interface UserState {
   users: any[];
   countries: any[];
   user: any;
-  tmp_file: any;
   action: HomeAction | null;
   message?: string;
+  image_link?: string;
 }
 
 const initialState: UserState = {
   users: [],
   countries: [],
   user: {},
-  tmp_file: null,
   action: null,
   message: "",
+  image_link: "",
 };
 
 const homeSlice = createSlice({
@@ -40,10 +40,7 @@ const homeSlice = createSlice({
       state.user = action.payload;
     },
     upload_image(state, action: PayloadAction<any>) {
-      state.tmp_file = action.payload;
-    },
-    upload_file(state, action: PayloadAction<any>) {
-      state.tmp_file = action.payload;
+      state.action = HomeAction.UPLOAD_IMAGE;
     },
     get_users(state, action: PayloadAction<any[]>) {
       state.users = action.payload;
@@ -54,17 +51,17 @@ const homeSlice = createSlice({
         users?: any[];
         countries?: any[];
         user?: any;
-        tmp_file?: any;
         action: HomeAction | null;
         message?: string;
+        image_link?: string;
       }>
     ) {
       state.users = action.payload.users || [...state.users];
       state.countries = action.payload.countries || [...state.countries];
       state.user = action.payload.user || { ...state.user };
-      state.tmp_file = action.payload.tmp_file || { ...state.tmp_file };
       state.action = action.payload.action;
       state.message = action.payload.message || "";
+      state.image_link = action.payload.image_link || "";
     },
   },
 });
@@ -75,7 +72,6 @@ export const {
   update_profile,
   upgrade_profile,
   upload_image,
-  upload_file,
   get_users,
   home_callback,
   home_reset_actions,
