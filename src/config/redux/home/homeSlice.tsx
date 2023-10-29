@@ -25,7 +25,7 @@ const userSlice = createSlice({
       state.users = action.payload;
     },
     add_country(state, action: PayloadAction<any>) {
-      state.countries.push(action.payload);
+      state.countries?.push(action.payload);
     },
     update_profile(state, action: PayloadAction<any>) {
       state.user = action.payload;
@@ -45,23 +45,17 @@ const userSlice = createSlice({
     home_callback(
       state,
       action: PayloadAction<{
-        users: any[];
-        countries: any[];
-        user: any;
-        tmp_file: any;
+        users?: any[];
+        countries?: any[];
+        user?: any;
+        tmp_file?: any;
         action: HomeAction | null;
       }>
     ) {
-      if (action.payload.action === HomeAction.GET_DATA_SUCCESS) {
-        state.users = action.payload.users;
-        state.countries = action.payload.countries;
-        state.user = action.payload.user;
-      }
-
-      if (action.payload.action === HomeAction.UPLOAD_IMAGE_SUCCESS) {
-        state.tmp_file = action.payload.tmp_file;
-      }
-      
+      state.users = action.payload.users || [...state.users];
+      state.countries = action.payload.countries || [...state.countries];
+      state.user = action.payload.user || { ...state.user };
+      state.tmp_file = action.payload.tmp_file || { ...state.tmp_file };
       state.action = action.payload.action;
     },
   },
@@ -75,6 +69,7 @@ export const {
   upload_image,
   upload_file,
   get_users,
+  home_callback,
 } = userSlice.actions;
 
 export default userSlice.reducer;
