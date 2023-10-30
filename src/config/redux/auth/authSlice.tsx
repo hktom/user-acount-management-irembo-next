@@ -59,6 +59,9 @@ const authSlice = createSlice({
     update_password: (state, action: PayloadAction<{}>) => {
       state.action = AuthAction.UPDATE_PASSWORD;
     },
+    send_email_verification: (state) => {
+      state.action = AuthAction.SEND_EMAIL_VERIFICATION;
+    },
     auth_callback: (
       state,
       action: PayloadAction<{
@@ -91,6 +94,7 @@ export const {
   loading,
   login_multi_factor,
   update_password,
+  send_email_verification,
 } = authSlice.actions;
 
 export default authSlice.reducer;

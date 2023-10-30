@@ -110,4 +110,16 @@ export const authMutation = {
 
     return mutateMethods(req);
   },
+
+  sendEmailVerify: ()=>{
+    const req = `#graphql
+    mutation{
+      sendEmailVerify{
+        message
+        status
+      }
+    }`;
+
+    return mutateMethods(req);
+  }
 };

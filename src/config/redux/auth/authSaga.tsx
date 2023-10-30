@@ -234,6 +234,29 @@ function* updatePasswordSaga(action: any): SagaIterator {
   }
 }
 
+function* sendEmailVerificationSaga(action: any): SagaIterator {
+  const res = yield call(authMutation.sendEmailVerify);
+  const { message, status } = res.data?.sendEmailVerify || res;
+  if (status == 200) {
+    yield put(
+      auth_callback({
+        message: message,
+        status: status,
+        action: AuthAction.SEND_EMAIL_VERIFICATION_SUCCESS,
+      })
+    );
+  } else {
+    const { message, status } = res.data?.sendEmailVerification;
+    yield put(
+      auth_callback({
+        message: message,
+        status: status,
+        action: AuthAction.SEND_EMAIL_VERIFICATION_FAILED,
+      })
+    );
+  }
+}
+
 export function* authSagas(): Generator {
   yield takeEvery("auth/login", loginSaga);
   yield takeEvery("auth/logout", logoutSaga);
@@ -243,4 +266,5 @@ export function* authSagas(): Generator {
   yield takeEvery("auth/verify_email", verifyEmailSaga);
   yield takeEvery("auth/login_multi_factor", loginMultiFactorSaga);
   yield takeEvery("auth/update_password", updatePasswordSaga);
+  yield takeEvery("auth/send_email_verification", sendEmailVerificationSaga);
 }
