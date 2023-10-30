@@ -53,7 +53,7 @@ function MainLayout(props: MainLayoutProps) {
       <Box w="100%" backgroundColor="#F6F6F6" p={4} minHeight={"100vh"}>
         <Box
           mx="auto"
-          maxW={"80rem"}
+          maxW={"70rem"}
           mt={10}
           backgroundColor={"#fff"}
           borderRadius={4}

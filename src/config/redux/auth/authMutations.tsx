@@ -30,7 +30,7 @@ export const authMutation = {
   verifyEmail: (data: IUser) => {
     const request = `#graphql
     mutation{
-      verifyEmail(email:"${data.email}"){
+      verifyEmail(email:"${data.email}", token:"${data.token}"){
         message
         status
       }

@@ -146,13 +146,21 @@ function* resetPasswordSaga(action: any): SagaIterator {
 
 function* verifyEmailSaga(action: any): SagaIterator {
   const res = yield call(authMutation.verifyEmail, action.payload);
-  if (res.data?.verifyEmail?.token) {
+  const { message, status } = res.data?.verifyEmail || res;
+  if (status == 200) {
     yield put(
       auth_callback({
-        token: res.data?.verifyEmail?.token,
-        message: res.error?.message,
-        status: res.error?.status,
-        action: AuthAction.VERIFY_EMAIL,
+        message: message,
+        status: status,
+        action: AuthAction.VERIFY_EMAIL_SUCCESS,
+      })
+    );
+  } else {
+    yield put(
+      auth_callback({
+        message: message,
+        status: status,
+        action: AuthAction.VERIFY_EMAIL_FAILED,
       })
     );
   }

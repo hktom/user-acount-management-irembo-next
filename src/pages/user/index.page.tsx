@@ -64,6 +64,11 @@ function Profile() {
         label: "Document Code",
         value: stateHome.user?.document?.code || "-",
       });
+      
+      data_document.push({
+        label: "Account Status",
+        value: stateHome.user?.status || "-",
+      });
 
       setPersonalInfo(data);
       setDocumentInfo(data_document);

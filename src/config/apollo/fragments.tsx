@@ -7,6 +7,7 @@ export const USER_FRAGMENT = `#graphql
     gender
     date_of_birth
     marital_status
+    email_verified_at
     status
     photo
     document{

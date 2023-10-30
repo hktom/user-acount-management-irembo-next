@@ -1,7 +1,7 @@
-import { AuthAction } from "@/config/helpers/enum";
+import { AuthAction, Status } from "@/config/helpers/enum";
 import { logout } from "@/config/redux/auth/authSlice";
 import { useAppSelector, useAppDispatch } from "@/config/store";
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, StarIcon } from "@chakra-ui/icons";
 import {
   Heading,
   Menu,
@@ -13,6 +13,8 @@ import {
   MenuDivider,
   Box,
   Spinner,
+  Badge,
+  Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useEffect } from "react";
@@ -20,6 +22,7 @@ import Cookies from "js-cookie";
 
 function Header() {
   const authState = useAppSelector((state) => state.auth);
+  const homeState = useAppSelector((state) => state.home);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -33,12 +36,21 @@ function Header() {
     <Box
       display="flex"
       alignItems="center"
-      justifyContent={"space-between"}
+      justifyContent={"flex-start"}
       px={4}
       py={4}
       backgroundColor={"#292D3F"}
     >
-      <Heading color="#fff">Z company</Heading>
+      <Heading color="#fff" as={NextLink} href="/">Z company</Heading>
+
+      <Box flexGrow={1} textAlign={"right"} mr={4}>
+        <Text fontSize="xl" fontWeight="bold" color={"#fff"}>
+          {homeState.user?.status === Status.VERIFIED && (
+            <StarIcon mr="2" color="blue.300" />
+          )}
+          {homeState.user?.first_name} {homeState.user?.last_name}
+        </Text>
+      </Box>
       <Menu>
         <MenuButton
           as={IconButton}
