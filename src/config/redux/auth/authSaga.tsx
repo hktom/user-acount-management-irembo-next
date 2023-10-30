@@ -41,7 +41,11 @@ function* logoutSaga(action: any): SagaIterator {
 }
 
 function* registerSaga(action: any): SagaIterator {
-  const passwordBothSame = yield call(passwordSame, action.payload);
+  const passwordBothSame = yield call(
+    passwordSame,
+    action.payload.password,
+    action.payload.password_confirmation
+  );
   const passwordValid = yield call(passwordCheck, action.payload.password);
   const emailValid = yield call(emailCheck, action.payload.email);
 
@@ -178,6 +182,36 @@ function* loginMultiFactorSaga(action: any): SagaIterator {
 }
 
 function* updatePasswordSaga(action: any): SagaIterator {
+  const passwordBothSame = yield call(
+    passwordSame,
+    action.payload.new_password,
+    action.payload.password_confirmation
+  );
+  const passwordValid = yield call(passwordCheck, action.payload.password);
+
+  if (!passwordBothSame) {
+    yield put(
+      auth_callback({
+        message: "Password and password confirmation must be same",
+        status: 403,
+        action: AuthAction.REGISTER_FAILED,
+      })
+    );
+    return;
+  }
+
+  if (!passwordValid) {
+    yield put(
+      auth_callback({
+        message:
+          "Password must be at least 8 characters, and contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+        status: 403,
+        action: AuthAction.REGISTER_FAILED,
+      })
+    );
+    return;
+  }
+
   const res = yield call(authMutation.updatePassword, action.payload);
   const { message, status } = res.data?.updatePassword || res;
   if (res.data?.updatePassword?.status == 200) {

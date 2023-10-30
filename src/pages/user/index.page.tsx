@@ -135,7 +135,7 @@ function Profile() {
             <Button leftIcon={<UnlockIcon />} colorScheme='teal' variant='solid' as={NextLink} href="/user/document">
               Upload document
             </Button>
-            <Button rightIcon={<ArrowForwardIcon />} colorScheme='teal' variant='outline' as={NextLink} href="/user/password">
+            <Button rightIcon={<ArrowForwardIcon />} colorScheme='teal' variant='outline' as={NextLink} href="/user/update-password">
               Change password
             </Button>
           </Stack>

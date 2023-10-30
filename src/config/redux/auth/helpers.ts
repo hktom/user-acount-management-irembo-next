@@ -1,5 +1,5 @@
-export const passwordSame = (payload:any) => {
-  if (payload.password === payload.password_confirmation) {
+export const passwordSame = (password:string, password_confirmation:string) => {
+  if (password === password_confirmation) {
     return true;
   }
   return false;
