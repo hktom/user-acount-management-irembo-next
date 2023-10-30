@@ -42,8 +42,8 @@ const homeSlice = createSlice({
     upload_image(state, action: PayloadAction<any>) {
       state.action = HomeAction.UPLOAD_IMAGE;
     },
-    get_users(state, action: PayloadAction<any[]>) {
-      state.users = action.payload;
+    get_users(state) {
+      state.action = HomeAction.GET_USERS;
     },
     update_document(state, action: PayloadAction<any>) {
       state.action = HomeAction.POST_DOCUMENT;

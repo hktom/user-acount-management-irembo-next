@@ -44,10 +44,11 @@ function* getCountriesSaga(): SagaIterator {
 
 function* getUsersSaga(): SagaIterator {
   const res = yield call(homeQuery.users);
-  if (res.data?.users) {
+  const { users } = res.data || res;
+  if (users) {
     yield put(
       home_callback({
-        users: res.data?.users,
+        users: users,
         action: HomeAction.GET_USERS_SUCCESS,
       })
     );
