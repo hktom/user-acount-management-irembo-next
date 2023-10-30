@@ -1,6 +1,7 @@
 import { HOST_URL } from "@/config/apollo/config";
 import { HomeAction, DOCUMENT_NAME } from "@/config/helpers/enum";
 import {
+  get_profile,
   home_reset_actions,
   update_document,
   update_profile,
@@ -27,6 +28,7 @@ import {
 import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 
 type Inputs = {
   code: string;
@@ -35,35 +37,17 @@ type Inputs = {
 function UpgradePage() {
   const stateHome = useAppSelector((state: any) => state.home);
   const dispatch = useAppDispatch();
-  const [documentType, setDocumentType] = useState<string | null>(
-    DOCUMENT_NAME.PASSPORT
-  );
+  const router = useRouter();
 
   useEffect(() => {
     dispatch(home_reset_actions());
   }, [dispatch]);
 
-  const displayImage = () => {
-    let image =
-      HomeAction.UPLOAD_IMAGE_SUCCESS == stateHome.action
-        ? stateHome.image_link
-        : stateHome.user?.document?.photo;
-    return (
-      <Box mb={10}>
-        <Box border={"2px solid #E7E7E7"} w={"450px"} h={"450px"}>
-          <Image
-            src={HOST_URL + "/storage/" + image}
-            alt="Dan Abramov"
-            fallbackSrc="/missing_product.jpeg"
-            objectFit="cover"
-            objectPosition="center"
-            w={"100%"}
-            h={"100%"}
-          />
-        </Box>
-      </Box>
-    );
-  };
+  useEffect(() => {
+    if (router) {
+      dispatch(get_profile(router.query?.id));
+    }
+  }, [dispatch, router]);
 
   return (
     <MainLayout>
@@ -101,40 +85,31 @@ function UpgradePage() {
             e.preventDefault();
           }}
         >
-          {displayImage()}
-          <FormControl my={3}>
-            <FormLabel>Choose new image</FormLabel>
-            <Input
-              type="file"
-              accept="image/*"
-              required
-              onChange={(e) => {
-                if (e && e.target?.files) {
-                  dispatch(upload_image(e.target.files[0]));
+          <Box mb={10}>
+            <Box border={"2px solid #E7E7E7"} w={"450px"} h={"450px"}>
+              <Image
+                src={
+                  HOST_URL + "/storage/" + stateHome.profile?.document?.photo
                 }
-              }}
-            />
-          </FormControl>
-
-          {HomeAction.UPLOAD_IMAGE_FAILED == stateHome.action && (
-            <Alert status="error">
-              <AlertIcon />
-              {stateHome.message}
-            </Alert>
-          )}
+                alt="Dan Abramov"
+                fallbackSrc="/missing_product.jpeg"
+                objectFit="cover"
+                objectPosition="center"
+                w={"100%"}
+                h={"100%"}
+              />
+            </Box>
+          </Box>
 
           <Box my={3}>
-            <FormLabel>Document name</FormLabel>
+            <FormLabel>Change Account Status</FormLabel>
             <Select
               placeholder=""
-              onChange={(e) => setDocumentType(e.target.value)}
+              // onChange={(e) => setDocumentType(e.target.value)}
               defaultValue={stateHome.user?.document?.name}
             >
               <option value={DOCUMENT_NAME.PASSPORT}>
                 {DOCUMENT_NAME.PASSPORT}
-              </option>
-              <option value={DOCUMENT_NAME.NATIONAL_ID}>
-                {DOCUMENT_NAME.NATIONAL_ID}
               </option>
             </Select>
           </Box>

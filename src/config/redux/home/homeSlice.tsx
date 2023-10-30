@@ -50,7 +50,7 @@ const homeSlice = createSlice({
     get_users(state) {
       state.action = HomeAction.GET_USERS;
     },
-    get_user(state, action: PayloadAction<any>) {
+    get_profile(state, action: PayloadAction<any>) {
       state.profile = state.users?.find((user) => user.id === action.payload);
     },
     update_document(state, action: PayloadAction<any>) {
@@ -87,6 +87,7 @@ export const {
   home_callback,
   home_reset_actions,
   update_document,
+  get_profile,
 } = homeSlice.actions;
 
 export default homeSlice.reducer;
