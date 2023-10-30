@@ -32,30 +32,16 @@ type Inputs = {
   code: string;
 };
 
-function UpgradeUserPage() {
+function UpgradePage() {
   const stateHome = useAppSelector((state: any) => state.home);
   const dispatch = useAppDispatch();
-  const [documentType, setDocumentType] = useState<string | null>(DOCUMENT_NAME.PASSPORT);
+  const [documentType, setDocumentType] = useState<string | null>(
+    DOCUMENT_NAME.PASSPORT
+  );
 
   useEffect(() => {
     dispatch(home_reset_actions());
   }, [dispatch]);
-
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    dispatch(
-      update_document({
-        ...data,
-        name: documentType,
-        photo: stateHome.image_link,
-      })
-    );
-  };
 
   const displayImage = () => {
     let image =
@@ -111,7 +97,9 @@ function UpgradeUserPage() {
           display={"block"}
           w={"100%"}
           mt={10}
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
         >
           {displayImage()}
           <FormControl my={3}>
@@ -127,10 +115,6 @@ function UpgradeUserPage() {
               }}
             />
           </FormControl>
-
-          {HomeAction.UPLOAD_IMAGE == stateHome.action && (
-            <Progress size="xs" isIndeterminate />
-          )}
 
           {HomeAction.UPLOAD_IMAGE_FAILED == stateHome.action && (
             <Alert status="error">
@@ -155,11 +139,6 @@ function UpgradeUserPage() {
             </Select>
           </Box>
 
-          <FormControl my={3}>
-            <FormLabel>Passport Number or National ID</FormLabel>
-            <Input type="text" required {...register("code")} />
-          </FormControl>
-
           <Button
             colorScheme="teal"
             size="md"
@@ -175,4 +154,4 @@ function UpgradeUserPage() {
   );
 }
 
-export default UpgradeUserPage;
+export default UpgradePage;

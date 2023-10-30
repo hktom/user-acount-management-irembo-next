@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import NextLink from "next/link";
+import { Status } from "@/config/helpers/enum";
 
 function AllUsersPage() {
   const stateHome = useAppSelector((state: any) => state.home);
@@ -26,7 +27,7 @@ function AllUsersPage() {
   return (
     <MainLayout>
       <Box w={"100%"}>
-        <Heading mb={5}>
+        <Heading mb={20}>
           <IconButton
             icon={<ChevronLeftIcon />}
             aria-label="Search database"
@@ -37,7 +38,14 @@ function AllUsersPage() {
         </Heading>
 
         {stateHome.users?.map((user: any, index: number) => (
-          <Flex key={user.id} as={NextLink} href={`/upgrade?id=${user.id}`}>
+          <Flex
+            key={user.id}
+            as={NextLink}
+            href={`/upgrade?id=${user.id}`}
+            mb={10}
+            borderBottom={"2px solid #F6F6F6"}
+            pb={5}
+          >
             <Avatar
               src={HOST_URL + "/storage/" + user.photo}
               name={user?.first_name + " " + user?.last_name}
@@ -49,7 +57,7 @@ function AllUsersPage() {
 
               <Badge
                 ml="1"
-                colorScheme={user.email_verified_at ? "green" : "red"}
+                colorScheme={user.status === Status.VERIFIED ? "green" : "red"}
               >
                 {user.status}
               </Badge>

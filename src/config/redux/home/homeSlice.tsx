@@ -29,6 +29,9 @@ const homeSlice = createSlice({
     get_data(state) {
       state.action = HomeAction.GET_DATA;
     },
+    get_countries(state) {
+      state.action = HomeAction.GET_COUNTRIES;
+    },
     add_country(state, action: PayloadAction<any>) {
       state.countries?.push(action.payload);
     },
@@ -37,7 +40,7 @@ const homeSlice = createSlice({
       state.action = HomeAction.UPDATE_PROFILE;
     },
     upgrade_profile(state, action: PayloadAction<any>) {
-      state.user = action.payload;
+      state.action = HomeAction.UPGRADE_PROFILE;
     },
     upload_image(state, action: PayloadAction<any>) {
       state.action = HomeAction.UPLOAD_IMAGE;

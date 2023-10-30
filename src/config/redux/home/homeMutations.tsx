@@ -44,10 +44,10 @@ export const homeMutation = {
     return mutateMethods(req);
   },
 
-  confirmDocument: (user_id: string, status: Status) => {
+  confirmDocument: (data:any) => {
     const req = `#graphql
         mutation{
-            confirmDocument(user_id:"${user_id}", status:${status}){
+            confirmDocument(user_id:"${data.user_id}", status:${data.status}){
                 message
                 status
             }
@@ -69,8 +69,7 @@ export const homeMutation = {
       });
       return res;
     } catch (error) {
-      console.log(error);
-      return null;
+      return { message: "Be sure your file not exceed 1MB", status: 400 };
     }
   },
 };

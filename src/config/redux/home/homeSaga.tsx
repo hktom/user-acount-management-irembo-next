@@ -113,26 +113,26 @@ function* postDocumentSaga(action: any): SagaIterator {
   }
 }
 
-function* confirmDocumentSaga(action: any): SagaIterator {
-  const res = yield call(
-    homeMutation.confirmDocument,
-    action.payload.user_id,
-    action.payload.status
-  );
-  if (res.data?.confirmDocument?.status) {
-    yield put(
-      home_callback({
-        action: HomeAction.CONFIRM_DOCUMENT_SUCCESS,
-      })
-    );
-  } else {
-    yield put(
-      home_callback({
-        action: HomeAction.CONFIRM_DOCUMENT_FAILED,
-      })
-    );
-  }
-}
+// function* confirmDocumentSaga(action: any): SagaIterator {
+//   const res = yield call(
+//     homeMutation.confirmDocument,
+//     action.payload.user_id,
+//     action.payload.status
+//   );
+//   if (res.data?.confirmDocument?.status) {
+//     yield put(
+//       home_callback({
+//         action: HomeAction.CONFIRM_DOCUMENT_SUCCESS,
+//       })
+//     );
+//   } else {
+//     yield put(
+//       home_callback({
+//         action: HomeAction.CONFIRM_DOCUMENT_FAILED,
+//       })
+//     );
+//   }
+// }
 
 function* uploadImageSaga(action: any): SagaIterator {
   const res = yield call(homeMutation.uploadImage, action.payload);
@@ -154,12 +154,35 @@ function* uploadImageSaga(action: any): SagaIterator {
   }
 }
 
+function* upgradeProfileSaga(action: any): SagaIterator {
+
+  const res = yield call(homeMutation.confirmDocument, action.payload);
+  const { message, status } = res.data?.confirmDocument || res;
+  if (status == 200) {
+    yield put(
+      home_callback({
+        message: message,
+        action: HomeAction.UPGRADE_PROFILE_SUCCESS,
+      })
+    );
+  } else {
+    yield put(
+      home_callback({
+        message: message,
+        action: HomeAction.UPGRADE_PROFILE_FAILED,
+      })
+    );
+  }
+}
+
 export function* homeSagas(): Generator {
   yield takeEvery("home/get_data", getMeSaga);
   yield takeEvery("home/get_countries", getCountriesSaga);
   yield takeEvery("home/get_users", getUsersSaga);
   yield takeEvery("home/update_profile", updateProfileSaga);
   yield takeEvery("home/update_document", postDocumentSaga);
-  yield takeEvery("home/confirm_document", confirmDocumentSaga);
   yield takeEvery("home/upload_image", uploadImageSaga);
+  yield takeEvery("home/upgrade_profile", upgradeProfileSaga);
+  yield takeEvery("home/get_countries", getCountriesSaga);
+
 }
