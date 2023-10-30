@@ -192,9 +192,9 @@ function* updatePasswordSaga(action: any): SagaIterator {
   if (!passwordBothSame) {
     yield put(
       auth_callback({
-        message: "Password and password confirmation must be same",
+        message: "New Password and password confirmation must be same",
         status: 403,
-        action: AuthAction.REGISTER_FAILED,
+        action: AuthAction.UPDATE_PASSWORD_FAILED,
       })
     );
     return;
@@ -206,7 +206,7 @@ function* updatePasswordSaga(action: any): SagaIterator {
         message:
           "Password must be at least 8 characters, and contain at least one uppercase letter, one lowercase letter, one number, and one special character",
         status: 403,
-        action: AuthAction.REGISTER_FAILED,
+        action: AuthAction.UPDATE_PASSWORD_FAILED,
       })
     );
     return;
