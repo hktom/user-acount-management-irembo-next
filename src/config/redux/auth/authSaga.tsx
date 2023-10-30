@@ -118,13 +118,21 @@ function* registerSaga(action: any): SagaIterator {
 
 function* forgotPasswordSaga(action: any): SagaIterator {
   const res = yield call(authMutation.forgotPassword, action.payload);
-  if (res.data?.forgotPassword?.token) {
+  const { message, status } = res.data?.forgotPassword || res;
+  if (status == 200) {
     yield put(
       auth_callback({
-        token: res.data?.forgotPassword?.token,
-        message: res.error?.message,
-        status: res.error?.status,
-        action: AuthAction.FORGOT_PASSWORD,
+        message: message,
+        status: status,
+        action: AuthAction.FORGOT_PASSWORD_SUCCESS,
+      })
+    );
+  } else {
+    yield put(
+      auth_callback({
+        message: message,
+        status: status,
+        action: AuthAction.FORGOT_PASSWORD_FAILED,
       })
     );
   }
@@ -132,13 +140,21 @@ function* forgotPasswordSaga(action: any): SagaIterator {
 
 function* resetPasswordSaga(action: any): SagaIterator {
   const res = yield call(authMutation.resetPassword, action.payload);
-  if (res.data?.resetPassword?.token) {
+  const { message, status } = res.data?.resetPassword || res;
+  if (status == 200) {
     yield put(
       auth_callback({
-        token: res.data?.resetPassword?.token,
-        message: res.error?.message,
-        status: res.error?.status,
-        action: AuthAction.RESET_PASSWORD,
+        message: message,
+        status: status,
+        action: AuthAction.RESET_PASSWORD_SUCCESS,
+      })
+    );
+  } else {
+    yield put(
+      auth_callback({
+        message: message,
+        status: status,
+        action: AuthAction.RESET_PASSWORD_FAILED,
       })
     );
   }

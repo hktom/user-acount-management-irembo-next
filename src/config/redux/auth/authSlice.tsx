@@ -43,7 +43,7 @@ const authSlice = createSlice({
       state.loading = true;
       state.action = AuthAction.REGISTER;
     },
-    forgot_password: (state) => {
+    forgot_password: (state, action: PayloadAction<any>) => {
       state.loading = true;
       state.action = AuthAction.FORGOT_PASSWORD;
     },

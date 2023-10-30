@@ -21,7 +21,7 @@ type Inputs = {
   password: string;
 };
 
-function LoginPage() {
+function LoginLinkPage() {
   const authState = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
@@ -81,4 +81,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default LoginLinkPage;
