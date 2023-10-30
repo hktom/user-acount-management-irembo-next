@@ -8,6 +8,7 @@ interface UserState {
   action: HomeAction | null;
   message?: string;
   image_link?: string;
+  profile?: any;
 }
 
 const initialState: UserState = {
@@ -17,6 +18,7 @@ const initialState: UserState = {
   action: null,
   message: "",
   image_link: "",
+  profile: {},
 };
 
 const homeSlice = createSlice({
@@ -47,6 +49,9 @@ const homeSlice = createSlice({
     },
     get_users(state) {
       state.action = HomeAction.GET_USERS;
+    },
+    get_user(state, action: PayloadAction<any>) {
+      state.profile = state.users?.find((user) => user.id === action.payload);
     },
     update_document(state, action: PayloadAction<any>) {
       state.action = HomeAction.POST_DOCUMENT;
