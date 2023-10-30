@@ -5,6 +5,7 @@ export interface IUser {
   email: string;
   password: string;
   photo: string;
+  new_password: string | null;
   password_confirmation: string | null;
   gender: string;
   date_of_birth: string;

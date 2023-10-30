@@ -177,6 +177,29 @@ function* loginMultiFactorSaga(action: any): SagaIterator {
   }
 }
 
+function* updatePasswordSaga(action: any): SagaIterator {
+  const res = yield call(authMutation.updatePassword, action.payload);
+  const { message, status } = res.data?.updatePassword || res;
+  if (res.data?.updatePassword?.status == 200) {
+    yield put(
+      auth_callback({
+        message: message,
+        status: status,
+        action: AuthAction.UPDATE_PASSWORD_SUCCESS,
+      })
+    );
+  } else {
+    const { message, status } = res.data?.updatePassword;
+    yield put(
+      auth_callback({
+        message: message,
+        status: status,
+        action: AuthAction.UPDATE_PASSWORD_FAILED,
+      })
+    );
+  }
+}
+
 export function* authSagas(): Generator {
   yield takeEvery("auth/login", loginSaga);
   yield takeEvery("auth/logout", logoutSaga);
@@ -185,4 +208,5 @@ export function* authSagas(): Generator {
   yield takeEvery("auth/reset_password", resetPasswordSaga);
   yield takeEvery("auth/verify_email", verifyEmailSaga);
   yield takeEvery("auth/login_multi_factor", loginMultiFactorSaga);
+  yield takeEvery("auth/update_password", updatePasswordSaga);
 }

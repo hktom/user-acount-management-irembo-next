@@ -98,4 +98,16 @@ export const authMutation = {
 
     return mutateMethods(request);
   },
+
+  updatePassword: (data: IUser) => {
+    const req = `#graphql
+    mutation{
+      updatePassword(password:"${data.password}", new_password:"${data.new_password}", password_confirmation:"${data.password_confirmation}"){
+        message
+        status
+      }
+    }`;
+
+    return mutateMethods(req);
+  },
 };

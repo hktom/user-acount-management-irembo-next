@@ -82,17 +82,30 @@ function* updateProfileSaga(action: any): SagaIterator {
 }
 
 function* postDocumentSaga(action: any): SagaIterator {
-  const res = yield call(homeMutation.postDocument, action.payload);
-  if (res.data?.postDocument?.document) {
+  if (!action.payload.name || !action.payload.code || !action.payload.photo) {
     yield put(
       home_callback({
-        user: res.data?.postDocument?.document,
+        message: "Please fill all the form",
+        action: HomeAction.POST_DOCUMENT_FAILED,
+      })
+    );
+    return;
+  }
+  const res = yield call(homeMutation.postDocument, action.payload);
+  const { error, message, status, user } = res.data?.postDocument || res;
+  console.log(error);
+  if (status == 200) {
+    yield put(
+      home_callback({
+        message: message,
         action: HomeAction.POST_DOCUMENT_SUCCESS,
+        user: user,
       })
     );
   } else {
     yield put(
       home_callback({
+        message: message,
         action: HomeAction.POST_DOCUMENT_FAILED,
       })
     );
@@ -132,7 +145,8 @@ function* uploadImageSaga(action: any): SagaIterator {
   } else {
     yield put(
       home_callback({
-        message: "We can't upload your image. Be sure your image extension is jpeg,png,jpg,webp and the size is less than 1MB",
+        message:
+          "We can't upload your image. Be sure your image extension is jpeg,png,jpg,webp and the size is less than 1MB",
         action: HomeAction.UPLOAD_IMAGE_FAILED,
       })
     );
@@ -144,7 +158,7 @@ export function* homeSagas(): Generator {
   yield takeEvery("home/get_countries", getCountriesSaga);
   yield takeEvery("home/get_users", getUsersSaga);
   yield takeEvery("home/update_profile", updateProfileSaga);
-  yield takeEvery("home/post_document", postDocumentSaga);
+  yield takeEvery("home/update_document", postDocumentSaga);
   yield takeEvery("home/confirm_document", confirmDocumentSaga);
   yield takeEvery("home/upload_image", uploadImageSaga);
 }

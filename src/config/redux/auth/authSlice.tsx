@@ -56,6 +56,9 @@ const authSlice = createSlice({
       state.loading = true;
       state.action = AuthAction.RESET_PASSWORD;
     },
+    update_password: (state, action: PayloadAction) => {
+      state.action = AuthAction.UPDATE_PASSWORD;
+    },
     auth_callback: (
       state,
       action: PayloadAction<{

@@ -1,32 +1,14 @@
 import { queryMethods } from "@/config/apollo/config";
+import { USER_FRAGMENT } from "@/config/apollo/fragments";
 
 export const homeQuery = {
   me: () => {
     const req = `#graphql
     {
-            me{
-                id
-                first_name
-                last_name
-                email
-                gender
-                date_of_birth
-                marital_status
-                status
-                photo
-                document{
-                    id
-                    name
-                    photo
-                }
-                nationality{
-                    id
-                    name
-                    code
-                    flag
-                }
-            }
-        }`;
+            me${USER_FRAGMENT}
+    }`;
+
+        
 
     return queryMethods(req);
   },
@@ -47,28 +29,7 @@ export const homeQuery = {
   users: () => {
     const req = `#graphql
     {
-        users{
-            id
-            first_name
-            last_name
-            email
-            gender
-            date_of_birth
-            marital_status
-            status
-            photo
-            document{
-                id
-                name
-                photo
-            }
-            nationality{
-                id
-                name
-                code
-                flag
-            }   
-        }
+        users${USER_FRAGMENT}
     }`;
 
     return queryMethods(req);

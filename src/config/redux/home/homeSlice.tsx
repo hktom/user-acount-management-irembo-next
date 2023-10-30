@@ -45,6 +45,9 @@ const homeSlice = createSlice({
     get_users(state, action: PayloadAction<any[]>) {
       state.users = action.payload;
     },
+    update_document(state, action: PayloadAction<any>) {
+      state.action = HomeAction.POST_DOCUMENT;
+    },
     home_callback(
       state,
       action: PayloadAction<{
@@ -61,7 +64,7 @@ const homeSlice = createSlice({
       state.user = action.payload.user || { ...state.user };
       state.action = action.payload.action;
       state.message = action.payload.message || "";
-      state.image_link = action.payload.image_link || "";
+      state.image_link = action.payload.image_link || state.image_link;
     },
   },
 });
@@ -75,6 +78,7 @@ export const {
   get_users,
   home_callback,
   home_reset_actions,
+  update_document,
 } = homeSlice.actions;
 
 export default homeSlice.reducer;

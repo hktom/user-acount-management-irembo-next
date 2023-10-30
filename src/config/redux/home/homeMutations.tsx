@@ -1,4 +1,5 @@
 import { HOST_URL, TOKEN, mutateMethods } from "@/config/apollo/config";
+import { USER_FRAGMENT } from "@/config/apollo/fragments";
 import { Status } from "@/config/helpers/enum";
 import { IDocument, IUser } from "@/config/helpers/interface";
 import axios from "axios";
@@ -17,28 +18,7 @@ export const homeMutation = {
             }){
                 message
                 status
-                user{
-                    id
-                    first_name
-                    last_name
-                    email
-                    gender
-                    date_of_birth
-                    marital_status
-                    status
-                    photo
-                    document{
-                        id
-                        name
-                        photo
-                    }
-                    nationality{
-                        id
-                        name
-                        code
-                        flag
-                    }
-                }
+                user${USER_FRAGMENT}
             }
         }
         `;
@@ -50,16 +30,17 @@ export const homeMutation = {
     const req = `#graphql
         mutation{
             postDocument(input:{
-                name : "${data.name}",
+                name : ${data.name},
                 code : "${data.code}",
                 photo : "${data.photo}",
             }){
                 message
                 status
-                document
+                user${USER_FRAGMENT}
             }
         }
     `;
+
     return mutateMethods(req);
   },
 
