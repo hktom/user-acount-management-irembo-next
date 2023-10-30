@@ -22,7 +22,6 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     login: (state, payload: PayloadAction<{}>) => {
-      state.loading = true;
       state.action = AuthAction.LOGIN;
     },
     login_multi_factor: (
@@ -32,23 +31,18 @@ const authSlice = createSlice({
         password: string;
       }>
     ) => {
-      state.loading = true;
       state.action = AuthAction.LOGIN_MULTI_FACTOR;
     },
     logout: (state) => {
-      state.loading = true;
       state.action = AuthAction.LOGOUT;
     },
     register: (state, payload: PayloadAction<any>) => {
-      state.loading = true;
       state.action = AuthAction.REGISTER;
     },
     forgot_password: (state, action: PayloadAction<any>) => {
-      state.loading = true;
       state.action = AuthAction.FORGOT_PASSWORD;
     },
-    reset_password: (state) => {
-      state.loading = true;
+    reset_password: (state, action: PayloadAction<any>) => {
       state.action = AuthAction.RESET_PASSWORD;
     },
     update_password: (state, action: PayloadAction<{}>) => {

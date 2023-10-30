@@ -14,8 +14,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import NextLink from "next/link";
 import { useAppDispatch, useAppSelector } from "@/config/store";
 import { AuthAction } from "@/config/helpers/enum";
-import { useEffect } from "react";
-import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
 import { login, login_multi_factor } from "@/config/redux/auth/authSlice";
 import { useRouter } from "next/router";
 
@@ -28,12 +27,7 @@ function LoginPage() {
   const authState = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const router = useRouter();
-
-  useEffect(() => {
-    if (authState.action === AuthAction.LOGIN_MULTI_FACTOR_SUCCESS) {
-      router.push("/auth/multi-factore");
-    }
-  }, [authState, router]);
+  const [email, setEmail] = useState<string>("");
 
   const {
     register,
@@ -41,7 +35,15 @@ function LoginPage() {
     watch,
     formState: { errors },
   } = useForm<Inputs>();
+
+  useEffect(() => {
+    if (authState.action === AuthAction.LOGIN_MULTI_FACTOR_SUCCESS && email) {
+      router.push(`/auth/multi-factore?email=${email}`);
+    }
+  }, [authState, email, router]);
+
   const onSubmit: SubmitHandler<Inputs> = (data) => {
+    setEmail(data.email);
     dispatch(login_multi_factor(data));
   };
 

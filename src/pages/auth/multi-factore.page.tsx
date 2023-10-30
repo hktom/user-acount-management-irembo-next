@@ -17,6 +17,7 @@ import { AuthAction } from "@/config/helpers/enum";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { login, login_multi_factor } from "@/config/redux/auth/authSlice";
+import { useRouter } from "next/router";
 
 type Inputs = {
   token: string;
@@ -25,6 +26,7 @@ type Inputs = {
 function MultiFactorPage() {
   const authState = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     if (authState.action === AuthAction.LOGIN_SUCCESS && authState.token) {
@@ -40,7 +42,7 @@ function MultiFactorPage() {
     formState: { errors },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    dispatch(login(data));
+    dispatch(login({ ...data, email: router?.query?.email as string }));
   };
 
   return (
