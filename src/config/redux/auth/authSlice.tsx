@@ -21,12 +21,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    login: (
-      state,
-      payload: PayloadAction<{
-        token: string;
-      }>
-    ) => {
+    login: (state, payload: PayloadAction<{}>) => {
       state.loading = true;
       state.action = AuthAction.LOGIN;
     },
@@ -65,6 +60,12 @@ const authSlice = createSlice({
     verify_email: (state, action: PayloadAction<{}>) => {
       state.action = AuthAction.VERIFY_EMAIL;
     },
+    send_magic_link: (state, action: PayloadAction<{}>) => {
+      state.action = AuthAction.SEND_MAGIC_LINK;
+    },
+    auth_reset_action: (state) => {
+      state.action = null;
+    },
     auth_callback: (
       state,
       action: PayloadAction<{
@@ -99,6 +100,8 @@ export const {
   update_password,
   send_email_verification,
   verify_email,
+  auth_reset_action,
+  send_magic_link,
 } = authSlice.actions;
 
 export default authSlice.reducer;

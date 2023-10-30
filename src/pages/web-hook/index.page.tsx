@@ -1,10 +1,11 @@
 import { AuthAction } from "@/config/helpers/enum";
-import { verify_email } from "@/config/redux/auth/authSlice";
+import { login, verify_email } from "@/config/redux/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/config/store";
 import AuthLayout from "@/layout/authLayout";
 import { Alert, AlertIcon, Box, Button, Spinner } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 function WebHookPage() {
   const router = useRouter();
@@ -25,11 +26,24 @@ function WebHookPage() {
           dispatch(verify_email(router.query));
           break;
 
+        case "magic_link":
+          setActionFailed(AuthAction.LOGIN_FAILED);
+          setActionSuccess(AuthAction.LOGIN_SUCCESS);
+          dispatch(login(router.query));
+          break;
+
         default:
           break;
       }
     }
   }, [dispatch, router]);
+
+  useEffect(() => {
+    if (authState.action === AuthAction.LOGIN_SUCCESS && authState.token) {
+      Cookies.set("token", authState.token);
+      window.location.href = "/";
+    }
+  }, [authState]);
 
   return (
     <AuthLayout title="" subtitle="">

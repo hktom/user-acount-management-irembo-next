@@ -265,6 +265,28 @@ function* sendEmailVerificationSaga(action: any): SagaIterator {
   }
 }
 
+function* sendMagicLinkSaga(action: any): SagaIterator {
+  const res = yield call(authMutation.sendMagicLink, action.payload);
+  const { message, status } = res.data?.loginLink || res;
+  if (status == 200) {
+    yield put(
+      auth_callback({
+        message: message,
+        status: status,
+        action: AuthAction.SEND_MAGIC_LINK_SUCCESS,
+      })
+    );
+  } else {
+    yield put(
+      auth_callback({
+        message: message,
+        status: status,
+        action: AuthAction.SEND_MAGIC_LINK_FAILED,
+      })
+    );
+  }
+}
+
 export function* authSagas(): Generator {
   yield takeEvery("auth/login", loginSaga);
   yield takeEvery("auth/logout", logoutSaga);
@@ -275,4 +297,5 @@ export function* authSagas(): Generator {
   yield takeEvery("auth/login_multi_factor", loginMultiFactorSaga);
   yield takeEvery("auth/update_password", updatePasswordSaga);
   yield takeEvery("auth/send_email_verification", sendEmailVerificationSaga);
+  yield takeEvery("auth/send_magic_link", sendMagicLinkSaga);
 }

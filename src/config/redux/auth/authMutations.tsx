@@ -17,7 +17,7 @@ export const authMutation = {
   login: (data: IUser) => {
     const request = `#graphql
   mutation{
-        login(token:"${data.token}"){
+        login(token:"${data.token}", email:"${data.email}"){
             message
             status
             token
@@ -111,7 +111,7 @@ export const authMutation = {
     return mutateMethods(req);
   },
 
-  sendEmailVerify: ()=>{
+  sendEmailVerify: () => {
     const req = `#graphql
     mutation{
       sendEmailVerify{
@@ -121,5 +121,17 @@ export const authMutation = {
     }`;
 
     return mutateMethods(req);
-  }
+  },
+
+  sendMagicLink: (data: IUser) => {
+    const req = `#graphql
+    mutation{
+      loginLink(email:"${data.email}"){
+        message
+        status
+      }
+    }`;
+
+    return mutateMethods(req);
+  },
 };
