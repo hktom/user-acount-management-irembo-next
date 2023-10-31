@@ -3,7 +3,7 @@
 Company Z provides essential online services for tens of thousands of users through their
 platform ZPlatform.
 
-<img src="https://res.cloudinary.com/diaylgu7a/image/upload/f_auto,q_auto/ziaqovbawnzfjzh5e7iz">
+<img src="https://res.cloudinary.com/diaylgu7a/image/upload/v1698735841/Screenshot_2023-10-31_at_08.02.59_k7axio.png">
 
 ### Installation
 

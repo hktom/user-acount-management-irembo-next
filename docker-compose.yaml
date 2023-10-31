@@ -5,8 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: my-nextjs-app
-    container_name: nextjs-app
+    image: user-management-next-app
+    container_name: user-management-next-app
     ports:
       - '3000:3000'
     environment:
