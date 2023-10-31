@@ -155,14 +155,14 @@ function* uploadImageSaga(action: any): SagaIterator {
 }
 
 function* upgradeProfileSaga(action: any): SagaIterator {
-
   const res = yield call(homeMutation.confirmDocument, action.payload);
-  const { message, status } = res.data?.confirmDocument || res;
+  const { message, status, users } = res.data?.confirmDocument || res;
   if (status == 200) {
     yield put(
       home_callback({
         message: message,
         action: HomeAction.UPGRADE_PROFILE_SUCCESS,
+        users: users,
       })
     );
   } else {
@@ -184,5 +184,4 @@ export function* homeSagas(): Generator {
   yield takeEvery("home/upload_image", uploadImageSaga);
   yield takeEvery("home/upgrade_profile", upgradeProfileSaga);
   yield takeEvery("home/get_countries", getCountriesSaga);
-
 }

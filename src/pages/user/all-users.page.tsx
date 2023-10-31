@@ -41,7 +41,7 @@ function AllUsersPage() {
           <Flex
             key={user.id}
             as={NextLink}
-            href={`/upgrade?id=${user.id}`}
+            href={`/user/upgrade?id=${user.id}`}
             mb={10}
             borderBottom={"2px solid #F6F6F6"}
             pb={5}

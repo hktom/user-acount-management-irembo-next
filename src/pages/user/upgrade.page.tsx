@@ -1,11 +1,12 @@
 import { HOST_URL } from "@/config/apollo/config";
-import { HomeAction, DOCUMENT_NAME } from "@/config/helpers/enum";
+import { HomeAction, DOCUMENT_NAME, Status } from "@/config/helpers/enum";
 import {
   get_profile,
   home_reset_actions,
-  update_document,
-  update_profile,
-  upload_image,
+  upgrade_profile,
+  // update_document,
+  // update_profile,
+  // upload_image,
 } from "@/config/redux/home/homeSlice";
 import { useAppDispatch, useAppSelector } from "@/config/store";
 import MainLayout from "@/layout/mainLayout";
@@ -13,31 +14,35 @@ import { ChevronLeftIcon } from "@chakra-ui/icons";
 import {
   Alert,
   AlertIcon,
-  Avatar,
+  // Avatar,
   Box,
   Button,
-  FormControl,
+  // FormControl,
   FormLabel,
   Heading,
   IconButton,
-  Input,
-  Progress,
+  // Input,
+  // Progress,
   Select,
   Image,
+  FormControl,
+  Input,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+// import { useForm, SubmitHandler } from "react-hook-form";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
+import { register } from "module";
 
-type Inputs = {
-  code: string;
-};
+// type Inputs = {
+//   code: string;
+// };
 
 function UpgradePage() {
   const stateHome = useAppSelector((state: any) => state.home);
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const [verification, setVerification] = useState<string | null>(null);
 
   useEffect(() => {
     dispatch(home_reset_actions());
@@ -57,19 +62,19 @@ function UpgradePage() {
             icon={<ChevronLeftIcon />}
             aria-label="Search database"
             as={NextLink}
-            href="/user/"
+            href="/user/all-users"
           />{" "}
-          Update Profile Image
+          Verify profile
         </Heading>
 
-        {HomeAction.POST_DOCUMENT_FAILED == stateHome.action && (
+        {HomeAction.UPGRADE_PROFILE_FAILED == stateHome.action && (
           <Alert status="error">
             <AlertIcon />
             {stateHome.message}
           </Alert>
         )}
 
-        {HomeAction.POST_DOCUMENT_SUCCESS == stateHome.action && (
+        {HomeAction.UPGRADE_PROFILE_SUCCESS == stateHome.action && (
           <Alert status="success">
             <AlertIcon />
             {stateHome.message}
@@ -81,8 +86,11 @@ function UpgradePage() {
           display={"block"}
           w={"100%"}
           mt={10}
-          onSubmit={(e) => {
+          onSubmit={(e:any) => {
             e.preventDefault();
+            dispatch(
+              upgrade_profile({ user_id: router.query?.id, status: verification })
+            );
           }}
         >
           <Box mb={10}>
@@ -101,16 +109,25 @@ function UpgradePage() {
             </Box>
           </Box>
 
+          <FormControl my={3}>
+            <FormLabel>Document name</FormLabel>
+            <Input
+              type="text"
+              defaultValue={stateHome.profile?.document?.name}
+              disabled
+              readOnly
+            />
+          </FormControl>
+
           <Box my={3}>
             <FormLabel>Change Account Status</FormLabel>
             <Select
               placeholder=""
-              // onChange={(e) => setDocumentType(e.target.value)}
-              defaultValue={stateHome.user?.document?.name}
+              onChange={(e) => setVerification(e.target.value)}
+              defaultValue={stateHome.profile?.document?.status}
             >
-              <option value={DOCUMENT_NAME.PASSPORT}>
-                {DOCUMENT_NAME.PASSPORT}
-              </option>
+              <option value={Status.UNVERIFIED}>{Status.UNVERIFIED}</option>
+              <option value={Status.VERIFIED}>{Status.VERIFIED}</option>
             </Select>
           </Box>
 
@@ -119,7 +136,7 @@ function UpgradePage() {
             size="md"
             type="submit"
             mt={5}
-            isLoading={HomeAction.POST_DOCUMENT == stateHome.action}
+            isLoading={HomeAction.UPGRADE_PROFILE == stateHome.action}
           >
             Update
           </Button>

@@ -50,6 +50,7 @@ export const homeMutation = {
             confirmDocument(user_id:"${data.user_id}", status:${data.status}){
                 message
                 status
+                users${USER_FRAGMENT}
             }
         }
     `;
@@ -57,10 +58,10 @@ export const homeMutation = {
   },
 
   uploadImage: async (image: File | any) => {
-    const data = new FormData();
-    data.append("image", image);
 
     try {
+      const data = new FormData();
+      data.append("image", image);
       const res = await axios.post(`${HOST_URL}/api/image/store`, data, {
         headers: {
           "content-type": "multipart/form-data",
