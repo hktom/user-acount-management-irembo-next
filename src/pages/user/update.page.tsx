@@ -6,6 +6,7 @@ import {
   HomeAction,
 } from "@/config/helpers/enum";
 import {
+  get_countries,
   home_reset_actions,
   update_profile,
 } from "@/config/redux/home/homeSlice";
@@ -45,6 +46,7 @@ function UpdatePage() {
   const [maritalStatus, setMaritalStatus] = useState<string | null>(
     MARITAL_STATUS.SINGLE
   );
+  const [nationality, setNationality] = useState<string | null>("");
 
   const field = (type: string, label: string, name: any, value: any) => {
     return (
@@ -63,12 +65,18 @@ function UpdatePage() {
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     dispatch(
-      update_profile({ ...data, gender: gender, marital_status: maritalStatus })
+      update_profile({
+        ...data,
+        gender: gender,
+        marital_status: maritalStatus,
+        nationality_id: nationality || undefined,
+      })
     );
   };
 
   useEffect(() => {
     dispatch(home_reset_actions());
+    dispatch(get_countries());
   }, [dispatch]);
 
   return (
@@ -151,6 +159,21 @@ function UpdatePage() {
               <option value={MARITAL_STATUS.WIDOWED}>
                 {MARITAL_STATUS.WIDOWED}
               </option>
+            </Select>
+          </Box>
+
+          <Box my={3}>
+            <FormLabel>Nationality</FormLabel>
+            <Select
+              placeholder=""
+              onChange={(e) => setNationality(e.target.value)}
+              defaultValue={stateHome.user?.nationality?.id || ""}
+            >
+              {stateHome.countries?.map((country: any, index: number) => (
+                <option value={country.id} key={country.id}>
+                  {country.name}
+                </option>
+              ))}
             </Select>
           </Box>
 
