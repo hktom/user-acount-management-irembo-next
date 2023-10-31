@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: user-management-next-app
+    container_name: user-management-next-app
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
