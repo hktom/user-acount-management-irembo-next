@@ -88,6 +88,7 @@ export const {
   home_reset_actions,
   update_document,
   get_profile,
+  get_countries,
 } = homeSlice.actions;
 
 export default homeSlice.reducer;

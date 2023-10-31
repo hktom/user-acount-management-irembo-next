@@ -15,6 +15,7 @@ export const homeMutation = {
                 gender:${data.gender},
                 date_of_birth:"${data.date_of_birth}",
                 marital_status:${data.marital_status},
+                nationality_id: "${data.nationality_id}"
             }){
                 message
                 status
