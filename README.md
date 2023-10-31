@@ -9,8 +9,16 @@ platform ZPlatform.
 
 1. Clone this repository : git clone https://github.com/hktom/user-acount-management-irembo-next.git
 2. Execute : cd user-acount-management-irembo-next
-3. Execute : docker-compose up -d --build
-4. Access the application via http://localhost:3000
+
+#### First installation
+1. Execute : docker-compose up -d --build
+
+#### If you have already installed the application
+1. Execute : docker-compose up -d to start the application
+2. Execute : docker-compose down to stop the application
+
+#### Usage
+1. Access the application via http://localhost:3000
 
 ### Testing
 
