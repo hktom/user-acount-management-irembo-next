@@ -44,12 +44,13 @@ export const homeMutation = {
     return mutateMethods(req);
   },
 
-  confirmDocument: (user_id: string, status: Status) => {
+  confirmDocument: (data:any) => {
     const req = `#graphql
         mutation{
-            confirmDocument(user_id:"${user_id}", status:${status}){
+            confirmDocument(user_id:"${data.user_id}", status:${data.status}){
                 message
                 status
+                users${USER_FRAGMENT}
             }
         }
     `;
@@ -57,10 +58,10 @@ export const homeMutation = {
   },
 
   uploadImage: async (image: File | any) => {
-    const data = new FormData();
-    data.append("image", image);
 
     try {
+      const data = new FormData();
+      data.append("image", image);
       const res = await axios.post(`${HOST_URL}/api/image/store`, data, {
         headers: {
           "content-type": "multipart/form-data",
@@ -69,8 +70,7 @@ export const homeMutation = {
       });
       return res;
     } catch (error) {
-      console.log(error);
-      return null;
+      return { message: "Be sure your file not exceed 1MB", status: 400 };
     }
   },
 };

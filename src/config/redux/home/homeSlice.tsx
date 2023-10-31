@@ -8,6 +8,7 @@ interface UserState {
   action: HomeAction | null;
   message?: string;
   image_link?: string;
+  profile?: any;
 }
 
 const initialState: UserState = {
@@ -17,6 +18,7 @@ const initialState: UserState = {
   action: null,
   message: "",
   image_link: "",
+  profile: {},
 };
 
 const homeSlice = createSlice({
@@ -29,6 +31,9 @@ const homeSlice = createSlice({
     get_data(state) {
       state.action = HomeAction.GET_DATA;
     },
+    get_countries(state) {
+      state.action = HomeAction.GET_COUNTRIES;
+    },
     add_country(state, action: PayloadAction<any>) {
       state.countries?.push(action.payload);
     },
@@ -37,13 +42,16 @@ const homeSlice = createSlice({
       state.action = HomeAction.UPDATE_PROFILE;
     },
     upgrade_profile(state, action: PayloadAction<any>) {
-      state.user = action.payload;
+      state.action = HomeAction.UPGRADE_PROFILE;
     },
     upload_image(state, action: PayloadAction<any>) {
       state.action = HomeAction.UPLOAD_IMAGE;
     },
-    get_users(state, action: PayloadAction<any[]>) {
-      state.users = action.payload;
+    get_users(state) {
+      state.action = HomeAction.GET_USERS;
+    },
+    get_profile(state, action: PayloadAction<any>) {
+      state.profile = state.users?.find((user) => user.id === action.payload);
     },
     update_document(state, action: PayloadAction<any>) {
       state.action = HomeAction.POST_DOCUMENT;
@@ -79,6 +87,7 @@ export const {
   home_callback,
   home_reset_actions,
   update_document,
+  get_profile,
 } = homeSlice.actions;
 
 export default homeSlice.reducer;

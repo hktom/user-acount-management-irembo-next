@@ -1,4 +1,4 @@
-import { AuthAction, Status } from "@/config/helpers/enum";
+import { AuthAction, Role, Status } from "@/config/helpers/enum";
 import { logout } from "@/config/redux/auth/authSlice";
 import { useAppSelector, useAppDispatch } from "@/config/store";
 import { HamburgerIcon, StarIcon } from "@chakra-ui/icons";
@@ -41,7 +41,9 @@ function Header() {
       py={4}
       backgroundColor={"#292D3F"}
     >
-      <Heading color="#fff" as={NextLink} href="/">Z company</Heading>
+      <Heading color="#fff" as={NextLink} href="/">
+        Z company
+      </Heading>
 
       <Box flexGrow={1} textAlign={"right"} mr={4}>
         <Text fontSize="xl" fontWeight="bold" color={"#fff"}>
@@ -63,6 +65,11 @@ function Header() {
             <MenuItem as={NextLink} href="/user/">
               My Account
             </MenuItem>
+            {homeState.user?.role === Role.ADMIN && (
+              <MenuItem as={NextLink} href="/user/all-users">
+                Users
+              </MenuItem>
+            )}
           </MenuGroup>
           <MenuDivider />
           <MenuGroup title="Help">

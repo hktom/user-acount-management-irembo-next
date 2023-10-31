@@ -10,6 +10,7 @@ export const USER_FRAGMENT = `#graphql
     email_verified_at
     status
     photo
+    role
     document{
         id
         name

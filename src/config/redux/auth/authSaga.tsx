@@ -49,17 +49,6 @@ function* registerSaga(action: any): SagaIterator {
   const passwordValid = yield call(passwordCheck, action.payload.password);
   const emailValid = yield call(emailCheck, action.payload.email);
 
-  if (!action.payload.gender || !action.payload.marital_status) {
-    yield put(
-      auth_callback({
-        message: "Gender and the marital status must be selected",
-        status: 403,
-        action: AuthAction.REGISTER_FAILED,
-      })
-    );
-    return;
-  }
-
   if (!passwordBothSame) {
     yield put(
       auth_callback({

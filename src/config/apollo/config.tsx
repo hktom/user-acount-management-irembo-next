@@ -34,7 +34,7 @@ export const queryMethods = async (object: any) => {
         `,
     });
   } catch (error) {
-    return { message: error, status: 500 };
+    return { message: "An error has occured", status: 500 };
   }
 };
 
@@ -46,6 +46,6 @@ export const mutateMethods = async (object: any) => {
         `,
     });
   } catch (error) {
-    return { message: error, status: 500 };
+    return { message: "An error has occured", status: 500 };
   }
 };

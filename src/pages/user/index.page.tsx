@@ -83,7 +83,8 @@ function Profile() {
         {!stateHome.user?.email_verified_at && (
           <Alert status="error">
             <AlertIcon />
-            Your email is not verified. Please check your email.{" "}
+            Your email is not verified. Please check your email.{" "} 
+            Before you can use our services, you must verify your email.
             <Button
               variant="outline"
               onClick={() => dispatch(send_email_verification())}
@@ -186,6 +187,7 @@ function Profile() {
               variant="solid"
               as={NextLink}
               href="/user/update"
+              disabled={!stateHome.user?.email_verified_at}
             >
               Edit profile
             </Button>
@@ -195,6 +197,7 @@ function Profile() {
               variant="solid"
               as={NextLink}
               href="/user/update-image"
+              disabled={!stateHome.user?.email_verified_at}
             >
               Edit Profile Picture
             </Button>
@@ -204,6 +207,7 @@ function Profile() {
               variant="solid"
               as={NextLink}
               href="/user/document"
+              disabled={!stateHome.user?.email_verified_at}
             >
               Upload document
             </Button>
@@ -213,6 +217,7 @@ function Profile() {
               variant="outline"
               as={NextLink}
               href="/user/update-password"
+              disabled={!stateHome.user?.email_verified_at}
             >
               Change password
             </Button>
