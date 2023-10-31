@@ -11,3 +11,8 @@ platform ZPlatform.
 2. Execute : cd user-acount-management-irembo-next
 3. Execute : docker-compose up -d --build
 4. Access the application via http://localhost:3000
+
+### Testing
+
+1. You can test the application by running : docker-compose exec yarn test
+2. You can see the coverage by running : docker-compose exec yarn test --coverage
