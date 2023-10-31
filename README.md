@@ -22,5 +22,5 @@ platform ZPlatform.
 
 ### Testing
 
-1. You can test the application by running : docker-compose exec yarn test
-2. You can see the coverage by running : docker-compose exec yarn test --coverage
+1. You can test the application by running : yarn test
+2. You can see the coverage by running :  yarn test --coverage
